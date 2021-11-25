@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { bool, shape, string } from 'prop-types';
 
-function Hello(props) {
+export default function hello(props) {
   const { children, bang, style } = props;
   return (
     <View>
@@ -14,13 +14,13 @@ function Hello(props) {
   );
 }
 
-Hello.propTypes = {
+hello.propTypes = {
   children: string.isRequired,
   bang: bool,
   style: shape(),
 };
 
-Hello.defaultProps = {
+hello.defaultProps = {
   bang: false,
   style: null,
 };
@@ -34,5 +34,3 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
-
-export default Hello;
