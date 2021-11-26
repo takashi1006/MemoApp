@@ -10,7 +10,6 @@ import KeyboardSafeView from '../components/KeboardSafeView';
 
 export default function memoEditScreen() {
   return (
-
     <KeyboardSafeView style={styles.container} behavior="height">
       <AppBar />
       <View style={styles.inputContainer}>

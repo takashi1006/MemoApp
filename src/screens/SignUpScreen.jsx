@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import AppBar from '../components/AppBar';
 import Btn from '../components/Btn';
@@ -19,7 +20,9 @@ export default function signUpScreen() {
         <Btn label="Submit" />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registerd?</Text>
-          <Text style={styles.footerLink}>log In.</Text>
+          <TouchableOpacity>
+            <Text style={styles.footerLink}>log In.</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
