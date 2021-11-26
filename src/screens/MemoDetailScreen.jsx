@@ -5,13 +5,12 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import AppBar from '../components/AppBar';
 import CircleBtn from '../components/CircleBtn';
 
-export default function memoDetailScreen() {
+export default function memoDetailScreen(props) {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
-      <AppBar />
       <View style={styles.memoHeader}>
         <Text style={styles.memoTitle}>タイトル</Text>
         <Text style={styles.memoDate}>2021年11月25日</Text>
@@ -24,7 +23,13 @@ export default function memoDetailScreen() {
           テキストがいっぱい入ってるよ！
         </Text>
       </ScrollView>
-      <CircleBtn style={{ top: 160, bottom: 'auto' }} name="edit-2" />
+      <CircleBtn
+        style={{ top: 60, bottom: 'auto' }}
+        name="edit-2"
+        onPress={() => {
+          navigation.navigate('MemoEdit');
+        }}
+      />
     </View>
   );
 }
