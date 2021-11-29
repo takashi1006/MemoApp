@@ -5,13 +5,36 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Btn from '../components/Btn';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function loginScreen(props) {
   const { navigation } = props;
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+
+  function handlePress() {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MemoList' }],
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        Alert.alert(errorCode);
+      });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -40,12 +63,7 @@ export default function loginScreen(props) {
         />
         <Btn
           label="Submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'MemoList'}],
-            });
-          }}
+          onPress={handlePress}
         />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registerd?</Text>
