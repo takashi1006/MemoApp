@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { getAuth, signOut } from "firebase/auth";
-import { useNavigation } from '@react-navigation/core';
+import {
+  Text, StyleSheet, TouchableOpacity, Alert,
+} from 'react-native';
+import { getAuth, signOut } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 
-export default function logOutBtn(props) {
+export default function logOutBtn() {
   const navigation = useNavigation();
 
   function handlePress() {
@@ -25,6 +27,7 @@ export default function logOutBtn(props) {
       Alert.alert(errorCode);
     });
   }
+
   return (
     <TouchableOpacity style={styles.logOutContainer} onPress={handlePress}>
       <Text style={styles.logOutLabel}>

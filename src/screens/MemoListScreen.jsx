@@ -17,7 +17,7 @@ export default function memoListScreen(props) {
       <CircleBtn
         name="plus"
         onPress={() => {
-          navigation.navigate("MemoEdit");
+          navigation.navigate('MemoCreate');
         }}
       />
     </View>

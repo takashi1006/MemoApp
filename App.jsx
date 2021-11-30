@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { initializeApp } from "firebase/app";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp } from 'firebase/app';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MemoListScreen from './src/screens/MemoListScreen';
 import MemoDetailScreen from './src/screens/MemoDetailScreen';
@@ -13,26 +13,27 @@ import LogInScreen from './src/screens/LogInScreen';
 
 import { firebaseConfig } from './env';
 
-const Stack = createStackNavigator();
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 // app.storage(AsyncStorage);
 
-export default function App() {
+const Stack = createStackNavigator();
+
+export default function app() {
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="LogIn"
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#467FD3",
+            backgroundColor: '#467FD3',
           },
           headerTitleStyle: {
-            color: "#ffffff"
+            color: '#ffffff',
           },
-          headerTitle: "Memo App",
-          headerTintColor: "#ffffff",
-          headerBackTitle: "Back",
+          headerTitle: 'Memo App',
+          headerTintColor: '#ffffff',
+          headerBackTitle: 'Back',
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           gestureEnabled: true,
           gestureDirection: 'horizontal',
@@ -42,14 +43,14 @@ export default function App() {
           name="LogIn"
           component={LogInScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
           }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
           }}
         />
         <Stack.Screen name="MemoList" component={MemoListScreen} />

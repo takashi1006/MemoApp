@@ -1,25 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
 } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import CircleBtn from '../components/CircleBtn';
 import KeyboardSafeView from '../components/KeboardSafeView';
 
+
 export default function memoCreateScreen(props) {
   const { navigation } = props;
+  const [bodyText, setBodyText] = useState('');
+
+  function handlePress() {
+    const { currentUser } = getAuth();
+    const db = getFirestore();
+    try {
+      const docRef = addDoc(collection(db, `users/${currentUser.uid}/memos`), {
+        bodyText,
+        updatedAt: new Date(),
+      });
+      console.log('Document written with ID: ', docRef.id);
+      navigation.goBack();
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  }
   return (
     <KeyboardSafeView style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput value="" multiline style={styles.input} />
+        <TextInput
+          value={bodyText}
+          multiline
+          style={styles.input}
+          onChangeText={(text) => { setBodyText(text); }}
+          autoFocus
+        />
       </View>
       <CircleBtn
         name="check"
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
+        onPress={handlePress} />
     </KeyboardSafeView>
   );
 }
