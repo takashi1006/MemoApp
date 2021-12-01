@@ -9,16 +9,15 @@ import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import CircleBtn from '../components/CircleBtn';
 import KeyboardSafeView from '../components/KeboardSafeView';
 
-
 export default function memoCreateScreen(props) {
   const { navigation } = props;
   const [bodyText, setBodyText] = useState('');
 
-  function handlePress() {
+  async function handlePress() {
     const { currentUser } = getAuth();
     const db = getFirestore();
     try {
-      const docRef = addDoc(collection(db, `users/${currentUser.uid}/memos`), {
+      const docRef = await addDoc(collection(db, `users/${currentUser.uid}/memos`), {
         bodyText,
         updatedAt: new Date(),
       });

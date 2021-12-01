@@ -1,4 +1,12 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  query,
+  orderBy,
+} from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { View, StyleSheet } from 'react-native';
 import MemoListItem from '../components/MemoListItem';
 import CircleBtn from '../components/CircleBtn';
@@ -10,10 +18,34 @@ export default function memoListScreen(props) {
     navigation.setOptions({
       headerRight: () => <LogOutBtn />,
     });
-  }, [navigation]);
+  }, []);
+
+  const [memos, setMemos] = useState([]);
+
+  useEffect(async () => {
+    const db = getFirestore();
+    const { currentUser } = getAuth();
+    let unsubscribe = () => {};
+    if (currentUser) {
+      const q = query(collection(db, `users/${currentUser.uid}/memos`), orderBy('updatedAt', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const userMemos = [];
+      unsubscribe = querySnapshot.forEach((doc) => {
+        userMemos.push({
+          id: doc.id,
+          bodyText: doc.data().bodyText,
+          updateAt: doc.data().updatedAt.toDate(),
+        });
+        // console.log(`${doc.id} => ${doc.data().bodyText}`);
+      });
+      setMemos(userMemos);
+    }
+    return unsubscribe;
+  }, [memos]);
+
   return (
     <View style={styles.container}>
-      <MemoListItem />
+      <MemoListItem memos={memos} />
       <CircleBtn
         name="plus"
         onPress={() => {
